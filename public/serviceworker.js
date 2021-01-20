@@ -8,6 +8,7 @@ const cacheAssets = [
   "./static/js/bundle.js",
   "./static/js/main.chunk.js",
   "./static/js/0.chunk.js",
+  'https://opentdb.com/api_category.php'
 ];
 
 const self = this;
