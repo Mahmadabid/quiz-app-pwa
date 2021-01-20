@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { QuestionCard } from "./Components/QuestionCard";
 import { fetchQuizData, QuestionState, categoryData, TnumState, CatState } from "./Global/Api";
 import { GlobalStyle, Wrapper } from "./App.styles";
 import { AmountSelector, CategorySelector, DIfficulitySelector, TypeSelector } from "./Components/Selectors";
 import './App.css';
 import { Result } from "./Components/Result";
+import { getNotifications } from "./Services/Notification";
 
 export type AnswerObject = {
   question: string;
@@ -14,6 +15,10 @@ export type AnswerObject = {
 }
 
 function App() {
+
+  useEffect(() => {
+    getNotifications();
+  }, [])
 
   const [loading, setloading] = useState(false);
   const [questions, setquestions] = useState<QuestionState[]>([]);
