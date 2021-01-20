@@ -13,13 +13,11 @@ const cacheAssets = [
 const self = this;
 
 self.addEventListener("install", (e) => {
-  console.log("Service Worker: Installed");
 
   e.waitUntil(
     caches
       .open(cacheName)
       .then((cache) => {
-        console.log("Service Worker: Caching Files");
         cache.addAll(cacheAssets);
       })
       .then(() => self.skipWaiting())
@@ -27,16 +25,15 @@ self.addEventListener("install", (e) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  console.log("Fetch event for ", event.request.url);
   event.respondWith(
     caches
       .match(event.request)
       .then((response) => {
         if (response) {
-          console.log("Found ", event.request.url, " in cache");
           return response;
         }
-        console.log("Network request for ", event.request.url);
+        let requestUrl = event.request.clone();
+        fetch(requestUrl);
         return fetch(event.request)
           .then((response) => {
             return caches.open(cacheName).then((cache) => {
@@ -49,21 +46,17 @@ self.addEventListener("fetch", (event) => {
           .catch(() => {
             return caches.match("./").then((response) => {
               if (response) {
-                console.log("Found ", event.request.url, " in cache");
-                console.log(response);
                 return response;
               }
             });
           });
       })
       .catch((error) => {
-        console.log("error in loading pages");
       })
   );
 });
 
 self.addEventListener("activate", (event) => {
-  console.log("Activating new service worker...");
 
   const cacheAllowlist = [cacheName];
 

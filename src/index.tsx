@@ -13,9 +13,6 @@ Notification
   .then(() => {
     return messaging.getToken();
   })
-  .then((token: any) => {
-    console.log("token", token);
-  });
 
 ReactDOM.render(
   <React.StrictMode>

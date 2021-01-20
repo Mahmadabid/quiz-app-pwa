@@ -14,8 +14,7 @@ export async function fetchQuizData(amount: number, difficulty: string, types: s
             ...question,
             answers: ShuffleArray([...question.incorrect_answers, question.correct_answer])
         } 
-        
-        ))
+    ))
 }
 
 type Category = {
